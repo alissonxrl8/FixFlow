@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#020617" />
+  <meta name="description" content="FixFlow OS - Sistema completo para assistência técnica com ordens de serviço, garantias, financeiro e bot WhatsApp." />
+
+  <title>FixFlow OS - Sistema para Assistência Técnica</title>
+
+  <link rel="icon" type="image/png" href="logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Arial']
+          },
+          boxShadow: {
+            blueGlow: '0 0 80px rgba(37, 99, 235, 0.35)',
+            soft: '0 24px 80px rgba(0, 0, 0, 0.45)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #020617;
+    }
+
+    .glass {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.48));
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .glass-strong {
+      background: linear-gradient(135deg, rgba(2, 6, 23, 0.92), rgba(15, 23, 42, 0.82));
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
+    }
+
+    .logo-glow {
+      filter: drop-shadow(0 0 28px rgba(37, 99, 235, 0.65));
+    }
+
+    .hero-title {
+      background: linear-gradient(135deg, #ffffff 0%, #dbeafe 40%, #60a5fa 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .blue-text {
+      background: linear-gradient(135deg, #38bdf8, #2563eb, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+      background-size: 54px 54px;
+      mask-image: linear-gradient(to bottom, black, transparent 82%);
+    }
+
+    .float {
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .float-delay {
+      animation: float 6s ease-in-out infinite;
+      animation-delay: 1.2s;
+    }
+
+    .pulse-soft {
+      animation: pulseSoft 4s ease-in-out infinite;
+    }
+
+    .shine {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shine::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, transparent 35%, rgba(255,255,255,.16) 50%, transparent 65%, transparent 100%);
+      transform: translateX(-120%);
+      animation: shine 5s ease-in-out infinite;
+    }
+
+    .device-frame {
+      transform: perspective(1100px) rotateY(-8deg) rotateX(4deg);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    @keyframes pulseSoft {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+
+    @keyframes shine {
+      0%, 65% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+
+    @media (max-width: 768px) {
+      .device-frame {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-white overflow-x-hidden font-sans selection:bg-blue-500/40">
+
+  <div class="fixed inset-0 -z-20 bg-[#020617]"></div>
+  <div class="fixed inset-0 -z-10 grid-bg"></div>
+
+  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div class="absolute top-[-160px] left-[-140px] w-[440px] h-[440px] bg-blue-600/30 rounded-full blur-[120px] pulse-soft"></div>
+    <div class="absolute top-[20%] right-[-170px] w-[520px] h-[520px] bg-cyan-500/18 rounded-full blur-[130px]"></div>
+    <div class="absolute bottom-[-220px] left-[30%] w-[520px] h-[520px] bg-indigo-600/20 rounded-full blur-[140px]"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 px-4 sm:px-6 py-4">
+    <nav class="max-w-7xl mx-auto glass rounded-3xl px-4 sm:px-5 py-3 flex items-center justify-between">
+      <a href="#inicio" class="flex items-center gap-3 min-w-0">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-950 border border-blue-400/20 overflow-hidden grid place-items-center shrink-0 shadow-blueGlow">
+          <img src="logo.png" alt="Logo FixFlow OS" class="w-full h-full object-contain p-1.5 logo-glow" />
+        </div>
+
+        <div class="min-w-0">
+          <h1 class="font-black text-lg sm:text-xl tracking-tight leading-none">FixFlow OS</h1>
+          <p class="text-[11px] sm:text-xs text-slate-400 font-bold mt-1 truncate">Assistência técnica inteligente</p>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-7 text-sm text-slate-300 font-bold">
+        <a href="#recursos" class="hover:text-white transition">Recursos</a>
+        <a href="#whatsapp" class="hover:text-white transition">WhatsApp</a>
+        <a href="#downloads" class="hover:text-white transition">Downloads</a>
+      </div>
+
+      <a href="#downloads" class="inline-flex items-center justify-center px-4 sm:px-5 py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 transition font-black shadow-blueGlow text-sm sm:text-base">
+        Baixar
+      </a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+
+    <section class="px-4 sm:px-6 pt-10 sm:pt-16 pb-16 sm:pb-24">
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-[1.03fr_.97fr] gap-12 lg:gap-16 items-center">
+
+        <div class="text-center lg:text-left">
+          <div class="mx-auto lg:mx-0 mb-7 w-24 h-24 sm:w-28 sm:h-28 rounded-[2rem] glass-strong p-3 float">
+            <img src="logo.png" alt="FixFlow OS" class="w-full h-full object-contain logo-glow" />
+          </div>
+
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-200 text-xs sm:text-sm font-black mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Sistema completo para OS, garantia e WhatsApp
+          </div>
+
+          <h2 class="hero-title text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.92] tracking-[-0.065em]">
+            Sua assistência técnica em outro nível.
+          </h2>
+
+          <p class="mt-6 text-slate-300 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            O FixFlow OS organiza clientes, aparelhos, serviços, garantias, financeiro e mensagens automáticas em uma experiência moderna, rápida e profissional.
+          </p>
+
+          <div id="downloads" class="mt-9 grid sm:grid-cols-2 gap-4 max-w-xl mx-auto lg:mx-0 scroll-mt-28">
+            <a href="downloads/FixFlow-APP.apk" download class="group shine rounded-[1.7rem] bg-gradient-to-br from-blue-500 to-blue-700 p-5 sm:p-6 hover:scale-[1.02] active:scale-[0.99] transition shadow-blueGlow text-left">
+              <div class="flex items-center justify-between gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-white/15 grid place-items-center text-3xl">📱</div>
+                <span class="text-xs font-black px-3 py-1 rounded-full bg-white/15 text-blue-50">APK</span>
+              </div>
+              <h3 class="font-black text-2xl mt-5">Android</h3>
+              <p class="text-blue-100 text-sm mt-1">Baixar FixFlow-APP.apk</p>
+              <div class="mt-5 font-black group-hover:translate-x-1 transition">Baixar app →</div>
+            </a>
+
+            <a href="downloads/FixFlow.exe" download class="group rounded-[1.7rem] glass p-5 sm:p-6 hover:border-blue-400/50 hover:scale-[1.02] active:scale-[0.99] transition text-left">
+              <div class="flex items-center justify-between gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-700 grid place-items-center text-3xl">💻</div>
+                <span class="text-xs font-black px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-400/20">EXE</span>
+              </div>
+              <h3 class="font-black text-2xl mt-5">Windows</h3>
+              <p class="text-slate-400 text-sm mt-1">Baixar FixFlow.exe</p>
+              <div class="mt-5 font-black text-blue-300 group-hover:translate-x-1 transition">Baixar desktop →</div>
+            </a>
+          </div>
+
+          <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs sm:text-sm text-slate-400 font-bold">
+            <span class="px-4 py-2 rounded-full bg-slate-900/70 border border-slate-800">⚡ Rápido</span>
+            <span class="px-4 py-2 rounded-full bg-slate-900/70 border border-slate-800">🧾 PDFs automáticos</span>
+            <span class="px-4 py-2 rounded-full bg-slate-900/70 border border-slate-800">🤖 Bot WhatsApp</span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute inset-0 bg-blue-600/20 blur-[90px] rounded-full pulse-soft"></div>
+
+          <div class="relative device-frame glass-strong rounded-[2rem] sm:rounded-[2.5rem] p-3 sm:p-5 float-delay">
+            <div class="rounded-[1.55rem] sm:rounded-[2rem] bg-slate-950 border border-slate-800 overflow-hidden shadow-soft">
+
+              <div class="h-12 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between px-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-full bg-red-400/80"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-400/80"></span>
+                  <span class="w-3 h-3 rounded-full bg-green-400/80"></span>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500 font-black">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  Online
+                </div>
+              </div>
+
+              <div class="p-4 sm:p-6">
+                <div class="flex items-center justify-between gap-4 mb-6">
+                  <div>
+                    <p class="text-slate-500 text-[11px] font-black uppercase tracking-[0.25em]">Painel FixFlow</p>
+                    <h3 class="text-2xl sm:text-3xl font-black mt-1">Dashboard</h3>
+                  </div>
+
+                  <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-slate-900 border border-blue-400/20 overflow-hidden grid place-items-center shadow-blueGlow">
+                    <img src="logo.png" alt="FixFlow" class="w-full h-full object-contain p-1.5 logo-glow" />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                  <div class="rounded-3xl bg-blue-600/15 border border-blue-400/20 p-4">
+                    <p class="text-slate-400 text-xs font-bold">Ordens abertas</p>
+                    <h4 class="text-3xl sm:text-4xl font-black mt-2">128</h4>
+                    <p class="text-blue-300 text-xs font-black mt-2">+18% no mês</p>
+                  </div>
+
+                  <div class="rounded-3xl bg-emerald-500/10 border border-emerald-400/20 p-4">
+                    <p class="text-slate-400 text-xs font-bold">Garantias</p>
+                    <h4 class="text-3xl sm:text-4xl font-black mt-2">42</h4>
+                    <p class="text-emerald-300 text-xs font-black mt-2">Ativas</p>
+                  </div>
+
+                  <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 col-span-2">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                      <div>
+                        <p class="text-slate-500 text-xs font-black uppercase">Última OS</p>
+                        <h4 class="font-black text-lg mt-1">Samsung A07 - Tela</h4>
+                      </div>
+                      <span class="text-[11px] px-3 py-1.5 rounded-full bg-blue-600/20 text-blue-300 border border-blue-400/20 font-black whitespace-nowrap">Em andamento</span>
+                    </div>
+
+                    <div class="h-2.5 rounded-full bg-slate-800 overflow-hidden">
+                      <div class="h-full w-[72%] bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></div>
+                    </div>
+
+                    <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                      <div class="rounded-2xl bg-slate-950 border border-slate-800 p-3">
+                        <p class="text-[10px] text-slate-500 font-bold">Cliente</p>
+                        <p class="text-xs font-black mt-1">João</p>
+                      </div>
+                      <div class="rounded-2xl bg-slate-950 border border-slate-800 p-3">
+                        <p class="text-[10px] text-slate-500 font-bold">PDF</p>
+                        <p class="text-xs font-black mt-1 text-blue-300">Gerado</p>
+                      </div>
+                      <div class="rounded-2xl bg-slate-950 border border-slate-800 p-3">
+                        <p class="text-[10px] text-slate-500 font-bold">Valor</p>
+                        <p class="text-xs font-black mt-1">R$ 180</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 col-span-2">
+                    <div class="flex items-center gap-4">
+                      <div class="w-12 h-12 rounded-2xl bg-green-500/15 border border-green-400/20 grid place-items-center text-2xl">🤖</div>
+                      <div class="min-w-0">
+                        <h4 class="font-black">Bot WhatsApp ativo</h4>
+                        <p class="text-slate-400 text-sm truncate">Envio automático de avisos, status e PDFs</p>
+                      </div>
+                      <span class="ml-auto hidden sm:inline-flex w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="recursos" class="px-4 sm:px-6 py-16 sm:py-24 scroll-mt-28">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <span class="inline-flex px-4 py-2 rounded-full bg-slate-900 border border-slate-800 text-blue-300 text-sm font-black mb-5">Recursos profissionais</span>
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-[-0.055em] leading-tight">
+            Tudo que sua assistência precisa em um só lugar.
+          </h2>
+          <p class="text-slate-400 mt-5 text-base sm:text-lg leading-relaxed">
+            Do atendimento até a garantia, o FixFlow deixa o fluxo mais simples, bonito e organizado.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-blue-500/15 border border-blue-400/20 grid place-items-center text-3xl mb-5">🧾</div>
+            <h3 class="font-black text-xl">Ordens de serviço</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Cadastre clientes, aparelhos, defeitos, soluções, valores e acompanhe cada status da OS.</p>
+          </article>
+
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-400/20 grid place-items-center text-3xl mb-5">🛡️</div>
+            <h3 class="font-black text-xl">Garantias automáticas</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Controle vencimentos, gere documentos e envie comprovantes de garantia para o cliente.</p>
+          </article>
+
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-400/20 grid place-items-center text-3xl mb-5">🤖</div>
+            <h3 class="font-black text-xl">Bot WhatsApp</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Avise o cliente quando a OS muda de status e envie PDFs automaticamente pelo WhatsApp.</p>
+          </article>
+
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-violet-500/15 border border-violet-400/20 grid place-items-center text-3xl mb-5">💰</div>
+            <h3 class="font-black text-xl">Financeiro</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Veja faturamento, custos, lucro e resultados do mês com uma visão clara e objetiva.</p>
+          </article>
+
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-orange-500/15 border border-orange-400/20 grid place-items-center text-3xl mb-5">📱</div>
+            <h3 class="font-black text-xl">App Android</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Acesse as principais funções pelo celular com telas responsivas e rápidas.</p>
+          </article>
+
+          <article class="glass rounded-[1.7rem] p-6 hover:-translate-y-1 hover:border-blue-400/35 transition">
+            <div class="w-14 h-14 rounded-2xl bg-slate-500/15 border border-slate-400/20 grid place-items-center text-3xl mb-5">💻</div>
+            <h3 class="font-black text-xl">Desktop Windows</h3>
+            <p class="text-slate-400 mt-3 leading-relaxed">Use no computador com painel completo, integração WhatsApp e produtividade real.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="whatsapp" class="px-4 sm:px-6 py-16 sm:py-24 scroll-mt-28">
+      <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+        <div class="glass-strong rounded-[2rem] p-6 sm:p-8 order-2 lg:order-1">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-14 h-14 rounded-2xl bg-green-500/15 border border-green-400/20 grid place-items-center text-3xl">💬</div>
+            <div>
+              <p class="text-green-300 font-black text-sm">Mensagem automática</p>
+              <h3 class="text-2xl font-black">Cliente sempre informado</h3>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="ml-auto max-w-[88%] rounded-3xl rounded-tr-md bg-green-600 p-4 shadow-soft">
+              <p class="font-bold">Olá, sua OS #128 foi recebida ✅</p>
+              <p class="text-green-50/85 text-sm mt-2">Aparelho: Samsung A07<br>Serviço: Troca de tela<br>Status: Em análise</p>
+            </div>
+
+            <div class="max-w-[88%] rounded-3xl rounded-tl-md bg-slate-800 p-4 border border-slate-700">
+              <p class="font-bold">PDF da ordem de serviço enviado automaticamente.</p>
+              <p class="text-slate-400 text-sm mt-2">O cliente recebe tudo sem você precisar digitar manualmente.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2 text-center lg:text-left">
+          <span class="inline-flex px-4 py-2 rounded-full bg-green-500/10 border border-green-400/20 text-green-300 text-sm font-black mb-5">Bot integrado</span>
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-[-0.055em] leading-tight">
+            Atendimento com cara de empresa grande.
+          </h2>
+          <p class="text-slate-400 mt-5 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+            Quando uma OS é criada, atualizada ou finalizada, o FixFlow pode avisar o cliente automaticamente pelo WhatsApp, deixando sua assistência mais profissional.
+          </p>
+
+          <div class="mt-7 grid sm:grid-cols-2 gap-3 max-w-xl mx-auto lg:mx-0">
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-4 font-bold text-slate-300">✅ Status da OS</div>
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-4 font-bold text-slate-300">✅ Envio de PDFs</div>
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-4 font-bold text-slate-300">✅ Avisos de garantia</div>
+            <div class="rounded-2xl bg-slate-900/80 border border-slate-800 p-4 font-bold text-slate-300">✅ Mais confiança</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-4 sm:px-6 py-16 sm:py-24">
+      <div class="max-w-6xl mx-auto glass-strong rounded-[2rem] sm:rounded-[2.7rem] p-7 sm:p-12 text-center relative overflow-hidden">
+        <div class="absolute top-[-90px] left-1/2 -translate-x-1/2 w-[360px] h-[360px] bg-blue-600/25 rounded-full blur-[110px]"></div>
+
+        <div class="relative">
+          <div class="mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-[1.7rem] bg-slate-950 border border-blue-400/20 p-3 shadow-blueGlow mb-6">
+            <img src="logo.png" alt="FixFlow OS" class="w-full h-full object-contain logo-glow" />
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-[-0.055em] leading-tight">
+            Baixe o FixFlow agora.
+          </h2>
+
+          <p class="text-slate-400 mt-5 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
+            Escolha a versão ideal para seu dispositivo e comece a gerenciar sua assistência com mais organização, velocidade e profissionalismo.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="downloads/FixFlow-APP.apk" download class="px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 transition font-black shadow-blueGlow">
+              📱 Baixar Android
+            </a>
+
+            <a href="downloads/FixFlow.exe" download class="px-8 py-4 rounded-2xl bg-slate-950 border border-slate-700 hover:border-blue-400 transition font-black">
+              💻 Baixar Windows
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="px-4 sm:px-6 py-8 border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-slate-950 border border-blue-400/20 overflow-hidden p-1.5">
+          <img src="logo.png" alt="FixFlow" class="w-full h-full object-contain" />
+        </div>
+        <div>
+          <p class="text-slate-300 text-sm font-black">FixFlow OS</p>
+          <p class="text-slate-500 text-xs font-semibold">© 2026 Todos os direitos reservados.</p>
+        </div>
+      </div>
+
+      <p class="text-slate-500 text-sm font-semibold max-w-md">
+        Sistema de ordens de serviço, garantias, financeiro e bot WhatsApp para assistência técnica.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
